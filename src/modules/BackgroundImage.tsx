@@ -8,7 +8,7 @@ export const BackgroundImage = () => {
         <>
         <Box position={'absolute'} top={0} left={0} height='100vh' zIndex={-10} backdropFilter={"blur(100px)"}>
             <Box filter={"blur(50px)"}>
-                <Image src={background} opacity={0.8}/>
+                <Image src={background}/>
             </Box>
         </Box>
         <Box position={'absolute'} top={0} left={0} height='100vh' width='100vw' zIndex={-5} opacity={0.1}>
