@@ -1,6 +1,7 @@
 import { Container, Grid, Heading, Stack, HStack, Text, Box, GridItem } from "@chakra-ui/react";
 import { Header } from "../modules/Header";
 import { BackgroundImage } from "../modules/BackgroundImage";
+import { Nodes } from "../modules/Nodes"
 import illustration from '/public/illustration.svg';
 import Image from 'next/image'
 
@@ -24,11 +25,9 @@ const Home = () => {
                     </Box>
                 </HStack>
                 </Box>
-                {/* <Box borderWidth='1px' borderRadius='lg' >
-                <Box bg={'white'} opacity={0.2}  backdropFilter={"blur(300px)"} borderWidth='1px' borderRadius='lg' >
-                    <Text>Nodes</Text>
+                <Box borderWidth='1px' borderRadius='lg' bg="rgba(248, 248, 248,0.3)" backdropFilter={"blur(10px)"}>
+                    <Nodes />
                 </Box>
-                </Box> */}
             </Stack>
         </Container>
     </>)
