@@ -1,4 +1,6 @@
 export interface Node {
-    name: string
-    link: string
+  id: number
+  name: string
+  url: string
+  neighbours: Node[]
 }

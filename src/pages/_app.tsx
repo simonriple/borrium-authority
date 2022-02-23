@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import { extendTheme } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
+import { Layout } from '../modules/Layout'
 
 const brand = {
   colors: {
@@ -18,7 +19,7 @@ const brand = {
       // styles for the `body`
       body: {
         bg: 'black',
-        color: 'white',
+        // color: 'white',
       },
       // styles for the `a`
       a: {
@@ -26,20 +27,22 @@ const brand = {
         _hover: {
           textDecoration: 'underline',
         },
-      }
+      },
     },
   },
 }
 
 const theme = extendTheme(brand)
 
-const App = ({Component, pageProps}: AppProps) => {
-    console.log("in app")
-    return (
-        <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
-        </ChakraProvider>
-    )
-} 
+const App = ({ Component, pageProps }: AppProps) => {
+  console.log('in app')
+  return (
+    <ChakraProvider theme={theme}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ChakraProvider>
+  )
+}
 
 export default App

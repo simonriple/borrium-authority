@@ -1,27 +1,42 @@
+import { mergeThemeOverride } from '@chakra-ui/react'
 import RequestHandler from '../../modules/RequestHandler'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { Node } from '../../types/node';
+import { Node } from '../../types/node'
 
-const nodes:Node[] = [
-    {
-        name: "Vg", 
-        link: 'https://www.vg.no/'
-    },{
-        name: "SimonRiple", 
-        link: 'https://simonriple.no/'
-    }]
+var nodes: Node[] = []
 
-const nodesHandler = new RequestHandler();
+const nodesHandler = new RequestHandler()
 
-nodesHandler.get = (req: NextApiRequest, res: NextApiResponse) => {
-    console.log('getting')
-    res.status(200).json(nodes)
+nodesHandler.get = (req, res) => {
+  console.log('getting')
+  res.status(200).json(nodes)
 }
 
-nodesHandler.post = (req: NextApiRequest, res: NextApiResponse) => {
-    console.log('posting')
-    nodes.push(req.body)
-    res.status(200).json({success: true})
+nodesHandler.post = (req, res) => {
+  console.log('new node registering', req.body)
+  const newNode: Node = { ...req.body, id: Math.floor(Math.random() * 9999) }
+  nodes.push(newNode)
+  res.status(200).json(newNode)
+}
+
+nodesHandler.put = (req, res) => {
+  const nodeId = req.query.id[0]
+  if (nodeId !== undefined) {
+    console.log('Node update id', nodeId, ' node ', req.body)
+    nodes.map((node) =>
+      node.id.toString() === nodeId ? { ...req.body } : node
+    )
+    const updatedNode = nodes.find((node) => node.id.toString() === nodeId)
+    console.log('Updated node: ', updatedNode)
+    res.status(200).json(updatedNode)
+  }
+}
+
+nodesHandler.delete = (req, res) => {
+  const nodeId = req.query.id
+  if (nodeId !== undefined) {
+    nodes = nodes.filter((node) => node.id.toString() !== nodeId)
+  }
+  res.status(200).json({ success: true })
 }
 
 export default nodesHandler.handleRequest
