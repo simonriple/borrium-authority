@@ -25,7 +25,7 @@ const emptyTrade = {
 
 export const Lend = () => {
   const [nodes, setNodes] = useState<Node[]>([])
-  const [selectedNodeUrl, setSelectedNodeUrl] = useState('')
+  // const [selectedNodeUrl, setSelectedNodeUrl] = useState('')
   const [lend, setLend] = useState<Trade>(emptyTrade)
 
   const getNodes = () => {
@@ -60,27 +60,33 @@ export const Lend = () => {
 
   const submit = () => {
     console.log('Submit')
-    fetch(`${selectedNodeUrl}/api/trades`, {
-      method: 'post',
-      body: JSON.stringify(lend),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status) {
-          setLend(emptyTrade)
-        } else {
-          console.error('errror when posting lend')
-        }
+    getNodes()
+    let success = true
+    nodes.map((node) => {
+      fetch(`${node.url}/api/trades`, {
+        method: 'post',
+        body: JSON.stringify(lend),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
+        .then((res) => res.json())
+        .then((res) => {
+          if (!res.status) {
+            console.error('errror when posting lend')
+            success = false
+          }
+        })
+    })
+    if (success) {
+      // setLend(emptyTrade)
+    }
   }
 
   return (
     <Box>
       <Text>Lend something to another profile</Text>
-      <Select
+      {/* <Select
         placeholder='Select miner'
         onChange={(e) => setSelectedNodeUrl(e.target.value)}
         bg='white'
@@ -88,7 +94,7 @@ export const Lend = () => {
         {nodes.map((node) => (
           <option value={node.url}>{node?.name}</option>
         ))}
-      </Select>
+      </Select> */}
       <Button onClick={getNodes}>Refresh nodes</Button>
       <InputScan
         value={lend.item}

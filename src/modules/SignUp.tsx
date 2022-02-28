@@ -11,6 +11,7 @@ export const SignUp = () => {
     const keyPair = keyGen.genKeyPair()
     const privateKey = keyPair.getPrivate().toString('hex')
     const publicKey = keyPair.getPublic().encode('hex', false)
+    console.log(privateKey, publicKey)
     localStorage.setItem('privateKey', privateKey)
     try {
       const urlPrivate = await QrCode.toDataURL(privateKey)
